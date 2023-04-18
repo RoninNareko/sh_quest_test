@@ -10,11 +10,12 @@ interface Iprops {
 }
 
 function Canceler({ data, setStore, setValue, setCancel, multiple }: Iprops) {
-  const copyData = [...data];
-  const cancelAddButton = document.querySelectorAll("button")[3];
-  if (cancelAddButton) {
-    cancelAddButton.style.display = "block";
+  const buttons = document.querySelectorAll(".myButton");
+  if (buttons.length > 1) {
+    // @ts-ignore
+    buttons[0].style.display = "block";
   }
+  const copyData = [...data];
   const lastaddedElement = copyData[copyData.length - 1];
   //@ts-ignore
   const onClick = (e) => {

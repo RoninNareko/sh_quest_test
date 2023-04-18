@@ -79,6 +79,10 @@ function App() {
   const { handleSubmit } = useForm();
   //@ts-ignore
   const onSubmit: SubmitHandler = (data) => {
+    const succesText = document.querySelector("h3");
+    if (succesText) {
+      succesText.textContent = "";
+    }
     const inputTextInputValue = document.querySelectorAll("input")[1].value;
     const buttons = document.querySelectorAll(".myButton");
     if (buttons.length > 1) {
@@ -124,9 +128,8 @@ function App() {
       });
     } else {
       console.log("sucess-values", store);
-      const succesText = document.querySelector("h3");
       if (succesText) {
-        succesText.textContent = " Успех -Посмотрите данные в консоли";
+        succesText.textContent = " Успех - Посмотрите данные в консоли";
       }
     }
   };
