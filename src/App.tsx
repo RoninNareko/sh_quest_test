@@ -1,24 +1,82 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
+import { GET_POSITIONS, GET_RELATIONS } from "./query/query";
+import { useQuery } from "@apollo/client";
+import CustomSelect from "./components/CustomSelect";
 
 function App() {
+  const [store, setStore] = useState({
+    cutomSelectTextInput: {
+      data: [],
+      selectedData: [],
+    },
+    cutomSelectTextAreaData: {
+      data: [],
+      selectedData: [],
+    },
+  });
+
+  const {
+    loading: relationsDataQueryLoadins,
+    error: relationsDataQueryError,
+    data: relationsDataQuery,
+  } = useQuery(GET_RELATIONS);
+  const {
+    loading: positionsDataQueryLoadins,
+    error: positionsDataQueryError,
+    data: positionsDataQuery,
+  } = useQuery(GET_POSITIONS);
+
+  useEffect(() => {
+    console.log("positionsDataQuery", positionsDataQuery);
+
+    if (!relationsDataQueryLoadins) {
+      setStore((prevState) => {
+        return {
+          ...prevState,
+          cutomSelectTextInput: {
+            data: relationsDataQuery.applicantIndividualCompanyRelations.data,
+            selectedData: [],
+          },
+        };
+      });
+    }
+    if (!positionsDataQueryLoadins) {
+      setStore((prevState) => {
+        return {
+          ...prevState,
+          cutomSelectTextAreaData: {
+            data: positionsDataQuery.applicantIndividualCompanyPositions.data,
+            selectedData: [],
+          },
+        };
+      });
+    }
+  }, [
+    relationsDataQuery,
+    positionsDataQuery,
+    relationsDataQueryLoadins,
+    positionsDataQueryLoadins,
+  ]);
+  console.log(positionsDataQuery);
+  console.log(relationsDataQuery);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <span>Relations</span>
+      {/* <DisplayLocations /> */}
+      <CustomSelect
+        setStore={setStore}
+        multiple={true}
+        store={store}
+        data={store.cutomSelectTextInput.data}
+      />
+      <span>Positions</span>
+      <CustomSelect
+        multiple={false}
+        store={store}
+        setStore={setStore}
+        data={store.cutomSelectTextAreaData.data}
+      />
     </div>
   );
 }
