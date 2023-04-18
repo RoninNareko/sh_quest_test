@@ -66,7 +66,7 @@ export default function SingleAutoComplite({
                 __typename: "ApplicantIndividualCompanyPosition",
               };
               newArr.push(newEntity);
-              console.log(newValue);
+
               setCancel(true);
               return {
                 ...prevState,
