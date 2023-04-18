@@ -1,0 +1,13 @@
+.App {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+.App>button{
+    margin-top: 20px;
+}
+.myButton{
+    margin-top: 20px !important;
+}
