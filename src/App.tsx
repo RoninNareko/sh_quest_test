@@ -17,20 +17,18 @@ function App() {
   });
 
   const {
-    loading: relationsDataQueryLoadins,
+    loading: relationsDataQueryLoading,
     error: relationsDataQueryError,
     data: relationsDataQuery,
   } = useQuery(GET_RELATIONS);
   const {
-    loading: positionsDataQueryLoadins,
+    loading: positionsDataQueryLoading,
     error: positionsDataQueryError,
     data: positionsDataQuery,
   } = useQuery(GET_POSITIONS);
 
   useEffect(() => {
-    console.log("positionsDataQuery", positionsDataQuery);
-
-    if (!relationsDataQueryLoadins) {
+    if (!relationsDataQueryLoading) {
       setStore((prevState) => {
         return {
           ...prevState,
@@ -41,7 +39,7 @@ function App() {
         };
       });
     }
-    if (!positionsDataQueryLoadins) {
+    if (!positionsDataQueryLoading) {
       setStore((prevState) => {
         return {
           ...prevState,
@@ -55,15 +53,18 @@ function App() {
   }, [
     relationsDataQuery,
     positionsDataQuery,
-    relationsDataQueryLoadins,
-    positionsDataQueryLoadins,
+    relationsDataQueryLoading,
+    positionsDataQueryLoading,
   ]);
-  console.log(positionsDataQuery);
-  console.log(relationsDataQuery);
+  console.log(
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    store.cutomSelectTextInput.data
+  );
+
   return (
     <div className="App">
       <span>Relations</span>
-      {/* <DisplayLocations /> */}
+
       <CustomSelect
         setStore={setStore}
         multiple={true}
@@ -71,11 +72,12 @@ function App() {
         data={store.cutomSelectTextInput.data}
       />
       <span>Positions</span>
+
       <CustomSelect
         multiple={false}
         store={store}
         setStore={setStore}
-        data={store.cutomSelectTextAreaData.data}
+        data={store.cutomSelectTextInput.data}
       />
     </div>
   );
