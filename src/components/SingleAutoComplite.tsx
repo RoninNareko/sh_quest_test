@@ -26,6 +26,9 @@ export default function SingleAutoComplite({
         // @ts-ignore
         onChange={(event, newValue) => {
           // @ts-ignore
+          if (!newValue) {
+            setCancel(false);
+          }
           if (newValue) {
             //@ts-ignore
             setStore((prevState) => {
@@ -48,6 +51,7 @@ export default function SingleAutoComplite({
             });
           } else if (newValue && newValue.inputValue) {
             // Create a new value from the user input
+
             setValue({
               name: newValue.inputValue,
             });
@@ -62,7 +66,7 @@ export default function SingleAutoComplite({
                 __typename: "ApplicantIndividualCompanyPosition",
               };
               newArr.push(newEntity);
-
+              console.log(newValue);
               setCancel(true);
               return {
                 ...prevState,
