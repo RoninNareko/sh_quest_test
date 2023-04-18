@@ -136,34 +136,36 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p className={"myP"}>
-          <b>Relations</b>
-        </p>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <p className={"myP"}>
+            <b>Relations</b>
+          </p>
 
-        <CustomSelect
-          errorMessage={store.cutomSelectTextAreaData.error.errorMessage}
-          setStore={setStore}
-          multiple={true}
-          store={store}
-          data={store.cutomSelectTextAreaData.data}
-        />
-        <p className={"myP"}>
-          <b>Positions</b>
-        </p>
+          <CustomSelect
+            errorMessage={store.cutomSelectTextAreaData.error.errorMessage}
+            setStore={setStore}
+            multiple={true}
+            store={store}
+            data={store.cutomSelectTextAreaData.data}
+          />
+          <p className={"myP"}>
+            <b>Positions</b>
+          </p>
 
-        <CustomSelect
-          errorMessage={store.cutomSelectTextInput.error.errorMessage}
-          multiple={false}
-          store={store}
-          setStore={setStore}
-          data={store.cutomSelectTextInput.data}
-        />
-        <Button className={"myButton"} variant={"contained"} type={"submit"}>
-          Check validation
-        </Button>
-        <h3 style={{ color: "green" }}>{null}</h3>
-      </form>
+          <CustomSelect
+            errorMessage={store.cutomSelectTextInput.error.errorMessage}
+            multiple={false}
+            store={store}
+            setStore={setStore}
+            data={store.cutomSelectTextInput.data}
+          />
+          <Button className={"myButton"} variant={"contained"} type={"submit"}>
+            Check validation
+          </Button>
+          <h3 style={{ color: "green" }}>{null}</h3>
+        </form>
+      </div>
     </div>
   );
 }
