@@ -1,5 +1,5 @@
-import { DataType } from "../types";
 import { Button } from "@mui/material";
+import { DataType } from "./SingleAutoComplite/SingleAutoComplite.types";
 
 interface Iprops {
   multiple: true | false;
