@@ -1,6 +1,6 @@
 export const GET_POSITIONS_QUERY_VARIABLES = {
   variables: {
-    page: 73,
+    page: 74,
   },
 };
 

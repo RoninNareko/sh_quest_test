@@ -33,12 +33,14 @@ export default function SingleAutoComplete() {
     ADD_POSITION_QUERY_OPTIONS
   );
 
-  const { data: optionsData, refetch } = useQuery(
+  const { data: optionsData } = useQuery(
     GET_POSITIONS_QUERY,
     GET_POSITIONS_QUERY_VARIABLES
   );
 
   React.useEffect(() => {
+    console.log("optionsData", optionsData);
+
     setOptions(optionsData?.applicantIndividualCompanyPositions.data || []);
   }, [optionsData]);
 
@@ -107,19 +109,16 @@ export default function SingleAutoComplete() {
   const onSaveHandler = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     console.log("inputNewValue", inputNewValue);
+
     if (inputNewValue && inputNewValue.name) {
       await addCompanyPosition({
         variables: { name: inputNewValue.name, company_id: "1" },
       });
-
+      setInputNewValue(null);
+      setValue(null);
       const succesAddedStatus =
         data?.createApplicantIndividualCompanyPosition || [];
       console.log(succesAddedStatus);
-      try {
-        await refetch({
-          page: 73,
-        });
-      } catch (error) {}
     }
   };
   const onCancelHandler = () => {
