@@ -15,4 +15,5 @@ export const ADD_POSITION_QUERY_OPTIONS = {
 
 
 export const AUTOCOMPLETE_SX = { width: 300 };
+
 export const AUTOCOMPLETE_ID = "free-solo-with-text-demo";
