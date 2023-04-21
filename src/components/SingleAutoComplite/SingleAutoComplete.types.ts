@@ -11,4 +11,3 @@ export type InputValueType = DataType | undefined | null;
 
 export type OptionsType = DataType[] | [];
 
-export type ErrorType = boolean | undefined | string;
