@@ -3,6 +3,11 @@ import { gql } from "@apollo/client";
 export const GET_POSITIONS_QUERY = gql`
   query companyPositions($page: Int) {
     applicantIndividualCompanyPositions(page: $page) {
+      paginatorInfo {
+        currentPage
+        total
+        lastPage
+      }
       data {
         id
         name
