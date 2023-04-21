@@ -1,5 +1,6 @@
 import "./App.css";
-import CustomSelect from "./components/CustomSelect";
+
+import SingleAutoComplete from "./components/SingleAutoComplite/SingleAutoComplete";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
         <p className={"myP"}>
           <b>Positions</b>
         </p>
-        <CustomSelect />
+        <SingleAutoComplete />
       </div>
     </div>
   );

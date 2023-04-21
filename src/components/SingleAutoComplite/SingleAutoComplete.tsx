@@ -11,22 +11,30 @@ import {
   GET_POSITIONS_QUERY,
 } from "../../query/query";
 import { useMutation, useQuery } from "@apollo/client";
-import { DataType, newValueType } from "./SingleAutoComplite.types";
+import {
+  DataType,
+  InputValueType,
+  OptionsType,
+  NewValueType,
+} from "./SingleAutoComplete.types";
 import { Button, FilterOptionsState } from "@mui/material";
 import {
   ADD_POSITION_QUERY_OPTIONS,
+  AUTOCOMPLETE_ID,
+  AUTOCOMPLETE_SX,
   GET_POSITIONS_QUERY_VARIABLES,
-} from "./SingleAutoComplite.constants";
+} from "./SingleAutoComplete.constants";
 
 export default function SingleAutoComplete() {
   const filter = createFilterOptions<DataType>();
 
-  const [value, setValue] = React.useState<DataType | undefined | null>(null);
-  const [options, setOptions] = React.useState<DataType[] | []>([]);
+  const [value, setValue] = React.useState<InputValueType>(null);
+  console.log(value);
 
-  const [inputNewValue, setInputNewValue] = React.useState<
-    DataType | undefined | null
-  >(null);
+  const [options, setOptions] = React.useState<OptionsType>([]);
+
+  const [inputNewValue, setInputNewValue] =
+    React.useState<InputValueType>(null);
 
   const [addCompanyPosition, { data }] = useMutation(
     ADD_COMPANY_POSITION_QUERY,
@@ -37,17 +45,23 @@ export default function SingleAutoComplete() {
     GET_POSITIONS_QUERY,
     GET_POSITIONS_QUERY_VARIABLES
   );
+  React.useEffect(() => {
+    if (!value) {
+      setInputNewValue(null);
+    }
+  }, [value]);
 
   React.useEffect(() => {
     console.log("optionsData", optionsData);
-
-    setOptions(optionsData?.applicantIndividualCompanyPositions.data || []);
+    const options = optionsData?.applicantIndividualCompanyPositions.data || [];
+    setOptions(options);
   }, [optionsData]);
 
   const onChangeHandler = async (
     event: SyntheticEvent<EventTarget>,
-    newValue: newValueType
+    newValue: NewValueType
   ) => {
+    console.log("ollllllllllllllll");
     if (typeof newValue === "string") {
       setValue({
         name: newValue,
@@ -64,8 +78,8 @@ export default function SingleAutoComplete() {
       setValue({
         name: newValue.inputValue,
       });
-      //@ts-ignore
-      setOptions((prevState) => {
+
+      setOptions((prevState: OptionsType) => {
         return [...prevState, _newValueEntity];
       });
     } else {
@@ -97,37 +111,53 @@ export default function SingleAutoComplete() {
     const isExisting = options.some((option) => inputValue === option.name);
 
     if (inputValue !== "" && !isExisting) {
-      filtered.push({
+      const addEntity = {
         inputValue,
         name: `Add "${inputValue}"`,
-      });
+      };
+
+      filtered.push(addEntity);
     }
 
     return filtered.sort((a, b) => a.name.localeCompare(b.name));
   };
-
+  const renderOptionHandler = (
+    props: React.HTMLAttributes<HTMLLIElement>,
+    option: DataType
+  ) => <li {...props}>{option.name}</li>;
+  const renderInputHandler = (params: AutocompleteRenderInputParams) => {
+    return <TextField {...params} label={"Single"} />;
+  };
   const onSaveHandler = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     console.log("inputNewValue", inputNewValue);
 
     if (inputNewValue && inputNewValue.name) {
-      await addCompanyPosition({
+      const potitionEntitey = {
         variables: { name: inputNewValue.name, company_id: "1" },
-      });
+      };
+
+      await addCompanyPosition(potitionEntitey);
+
       setInputNewValue(null);
-      setValue(null);
+
       const succesAddedStatus =
         data?.createApplicantIndividualCompanyPosition || [];
+
       console.log(succesAddedStatus);
     }
   };
+
   const onCancelHandler = () => {
     const optionsCopy = [...options];
     optionsCopy.pop();
+
     setOptions(optionsCopy);
+
     setInputNewValue(null);
     setValue(null);
   };
+
   return (
     <>
       <Autocomplete
@@ -137,23 +167,23 @@ export default function SingleAutoComplete() {
         selectOnFocus
         clearOnBlur
         handleHomeEndKeys
-        id="free-solo-with-text-demo"
+        id={AUTOCOMPLETE_ID}
         options={options}
         getOptionLabel={getOptionlabelHandler}
-        renderOption={(props, option) => <li {...props}>{option.name}</li>}
-        sx={{ width: 300 }}
+        renderOption={renderOptionHandler}
+        sx={AUTOCOMPLETE_SX}
         freeSolo
-        renderInput={(params: AutocompleteRenderInputParams) => {
-          return <TextField {...params} label={"Single"} />;
-        }}
+        renderInput={renderInputHandler}
       />
-      <Button onClick={onSaveHandler} variant="contained" color="success">
-        Save
-      </Button>
-      {inputNewValue && (
-        <Button onClick={onCancelHandler} variant="outlined" color="error">
-          Cancel
-        </Button>
+      {inputNewValue && value && (
+        <>
+          <Button onClick={onSaveHandler} variant="contained" color="success">
+            Save
+          </Button>
+          <Button onClick={onCancelHandler} variant="outlined" color="error">
+            Cancel
+          </Button>
+        </>
       )}
     </>
   );
