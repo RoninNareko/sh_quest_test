@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_POSITIONS_QUERY = gql`
-  query ds($page: Int) {
+  query companyPositions($page: Int) {
     applicantIndividualCompanyPositions(page: $page) {
       data {
         id
