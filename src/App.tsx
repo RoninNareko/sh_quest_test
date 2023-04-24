@@ -1,6 +1,6 @@
-import "./App.css";
 import MyForm from "./components/MyForm/MyForm";
 import SingleAutoComplete from "./components/SingleAutoComplite/SingleAutoComplete";
+import "./App.scss";
 
 function App() {
   return (

@@ -1,0 +1,27 @@
+.App {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+
+.myButton {
+  margin: 20px !important;
+  margin-left: 0 !important;
+}
+
+h3 {
+  color: red;
+}
+
+/*form*/
+.container {
+  display: flex;
+  justify-content: space-between;
+
+  section {
+    margin-right: 50px;
+  }
+}
