@@ -3,13 +3,27 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    height:100vh;
+    height: 100vh;
 
 }
-.myButton{
+
+.myButton {
     margin: 20px !important;
     margin-left: 0 !important;
 }
-h3{
-    color:red;
+
+h3 {
+    color: red;
+}
+
+/*form*/
+.myHookForm_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 37%;
+}
+
+.container {
+    display: flex;
 }

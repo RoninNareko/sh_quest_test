@@ -1,15 +1,17 @@
 import "./App.css";
-
+import MyForm from "./components/MyForm/MyForm";
 import SingleAutoComplete from "./components/SingleAutoComplite/SingleAutoComplete";
 
 function App() {
   return (
     <div className="App">
-      <div>
-        <p className={"myP"}>
-          <b>Positions</b>
-        </p>
-        <SingleAutoComplete />
+      <div className={"container"}>
+        <section>
+          <MyForm />
+        </section>
+        <section>
+          <SingleAutoComplete />
+        </section>
       </div>
     </div>
   );
