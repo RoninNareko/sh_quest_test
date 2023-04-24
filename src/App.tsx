@@ -1,4 +1,4 @@
-import MyForm from "./components/MyForm/MyForm";
+import ValidationForm from "./components/ValidationForm/ValidationForm";
 import SingleAutoComplete from "./components/SingleAutoComplite/SingleAutoComplete";
 import "./App.scss";
 
@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <div className={"container"}>
         <section>
-          <MyForm />
+          <ValidationForm />
         </section>
         <section>
           <SingleAutoComplete />

@@ -1,8 +1,11 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useQuery } from "@apollo/client";
 
-import { DataType, IFormInput } from "./MyForm.types";
-import { GET_POSITIONS_QUERY, GET_RELATIONS_QUERY } from "./MyForm.queries";
+import { DataType, IFormInput } from "./ValidationForm.types";
+import {
+  GET_POSITIONS_QUERY,
+  GET_RELATIONS_QUERY,
+} from "./ValidationForm.queries";
 
 import classNames from "classnames";
 import { ErrorMessage } from "@hookform/error-message";
@@ -38,16 +41,17 @@ import {
   TEXTINPUT_ERROR_MESSAGE,
   TEXTINPUT_LABEL,
   TEXTINPUT_NAME,
-} from "./MyForm.constants";
+} from "./ValidationForm.constants";
 
-import styles from "./MyForm.module.scss";
+import styles from "./ValidationForm.module.scss";
 
-export default function MyForm() {
+export default function ValidationForm() {
   const {
     formState: { errors },
     handleSubmit,
     control,
   } = useForm<IFormInput>();
+
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log("success-data", data);
   };
@@ -65,6 +69,7 @@ export default function MyForm() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className={classNames(styles.inp_title)}>textInput</h1>
+
         <Controller
           rules={{ required: TEXTINPUT_ERROR_MESSAGE }}
           name={TEXTINPUT_NAME}
@@ -74,7 +79,7 @@ export default function MyForm() {
               <TextField
                 onChange={onChange}
                 value={value}
-                error={Boolean(errors.textInput?.message)}
+                error={!!errors.textInput?.message}
                 label={errors.textInput?.message || TEXTINPUT_LABEL}
               />
             );
@@ -98,7 +103,7 @@ export default function MyForm() {
           render={({ field: { onChange, value } }) => (
             <TextField
               onChange={onChange}
-              error={Boolean(errors.textArea?.message)}
+              error={!!errors.textArea?.message}
               value={value}
               label={errors.textArea?.message || TEXTAREA_LABEL}
             />
@@ -135,7 +140,7 @@ export default function MyForm() {
                   id={SELECT_POSITIONS_PROPS_ID}
                   value={value}
                   label={SELECT_POSITIONS_PROPS_LABEL_VALUE}
-                  error={Boolean(errors.positions?.message)}
+                  error={!!errors.positions?.message}
                   onChange={onChange}
                 >
                   {positionsOptions?.map((option) => (
@@ -179,7 +184,7 @@ export default function MyForm() {
                   id={SELECT_RELATIONS_PROPS_ID}
                   value={value}
                   label={SELECT_RELATIONS_PROPS_LABEL_VALUE}
-                  error={Boolean(errors.relations?.message)}
+                  error={!!errors.relations?.message}
                   onChange={onChange}
                 >
                   {relationsOptions?.map((option) => (
