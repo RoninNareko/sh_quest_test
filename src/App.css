@@ -17,13 +17,8 @@ h3 {
 }
 
 /*form*/
-.myHookForm_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 37%;
-}
-
 .container {
     display: flex;
+    justify-content: space-between;
+    width: 45%;
 }

@@ -27,3 +27,7 @@ export const TEXTINPUT_LABEL = "TextInput";
 export const TEXTAREA_ERROR_MESSAGE = "Поле не должно быть пустым!";
 export const TEXTAREA_NAME = "textArea";
 export const TEXTAREA_LABEL = "TextArea";
+//error styles
+export const ERROR_COLOR = "red";
+
+export const FORM_BUTTON_TYPE = "submit";

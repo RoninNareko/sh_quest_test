@@ -14,6 +14,8 @@ import {
   TextField,
 } from "@mui/material";
 import {
+  ERROR_COLOR,
+  FORM_BUTTON_TYPE,
   SELECT_POSITIONS_ERROR_MESSAGE,
   SELECT_POSITIONS_LABEL_ID,
   SELECT_POSITIONS_LABEL_VALUE,
@@ -58,11 +60,8 @@ export default function MyForm() {
     relationsData?.applicantIndividualCompanyRelations.data || [];
 
   return (
-    <div className={"myHookForm_container"}>
-      <form
-        className={classNames(styles.form)}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h1 className={classNames(styles.inp_title)}>textInput</h1>
         <Controller
           rules={{ required: TEXTINPUT_ERROR_MESSAGE }}
@@ -124,7 +123,7 @@ export default function MyForm() {
                 <InputLabel
                   id={SELECT_POSITIONS_LABEL_ID}
                   style={{
-                    color: errors.positions?.message && "red",
+                    color: errors.positions?.message && ERROR_COLOR,
                   }}
                 >
                   {errors.positions?.message || SELECT_POSITIONS_LABEL_VALUE}
@@ -168,7 +167,7 @@ export default function MyForm() {
                 <InputLabel
                   id={SELECT_RELATIONS_LABEL_ID}
                   style={{
-                    color: errors.relations?.message && "red",
+                    color: errors.relations?.message && ERROR_COLOR,
                   }}
                 >
                   {errors.relations?.message || SELECT_RELATIONS_LABEL_VALUE}
@@ -200,7 +199,7 @@ export default function MyForm() {
           )}
         />
 
-        <button type={"submit"} className={classNames(styles.button)}>
+        <button type={FORM_BUTTON_TYPE} className={classNames(styles.button)}>
           Отправить
         </button>
       </form>
