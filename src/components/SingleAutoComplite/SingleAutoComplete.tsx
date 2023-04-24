@@ -1,13 +1,20 @@
 import Autocomplete from "@mui/material/Autocomplete";
 
-import React, {SyntheticEvent, useEffect, useState} from "react";
-import {v4 as uuidv4} from "uuid";
-import {ADD_COMPANY_POSITION_QUERY, GET_POSITIONS_QUERY,} from "../../query/query";
-import {useMutation, useQuery} from "@apollo/client";
+import React, { SyntheticEvent, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import {
+  ADD_COMPANY_POSITION_QUERY,
+  GET_POSITIONS_QUERY,
+} from "./SingleAutoComplete.queries";
+import { useMutation, useQuery } from "@apollo/client";
 
-import {InputValueType, NewValueType, OptionsType,} from "./SingleAutoComplete.types";
+import {
+  InputValueType,
+  NewValueType,
+  OptionsType,
+} from "./SingleAutoComplete.types";
 
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 
 import {
   ADD_POSITION_QUERY_OPTIONS,
@@ -24,135 +31,135 @@ import {
 } from "./SingleAutoComplete.utils";
 
 export default function SingleAutoComplete() {
-    const [value, setValue] = useState<InputValueType>(null);
+  const [value, setValue] = useState<InputValueType>(null);
 
-    const [options, setOptions] = useState<OptionsType>([]);
+  const [options, setOptions] = useState<OptionsType>([]);
 
-    const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const [inputNewValue, setInputNewValue] = useState<InputValueType>(null);
+  const [inputNewValue, setInputNewValue] = useState<InputValueType>(null);
 
-    const [addCompanyPosition] = useMutation(
-        ADD_COMPANY_POSITION_QUERY,
-        ADD_POSITION_QUERY_OPTIONS
-    );
+  const [addCompanyPosition] = useMutation(
+    ADD_COMPANY_POSITION_QUERY,
+    ADD_POSITION_QUERY_OPTIONS
+  );
 
-    const {data: optionsData} = useQuery(
-        GET_POSITIONS_QUERY,
-        GET_POSITIONS_QUERY_VARIABLES
-    );
+  const { data: optionsData } = useQuery(
+    GET_POSITIONS_QUERY,
+    GET_POSITIONS_QUERY_VARIABLES
+  );
 
-    useEffect(() => {
-        if (!value) {
-            setInputNewValue(null);
-        }
-    }, [value]);
+  useEffect(() => {
+    if (!value) {
+      setInputNewValue(null);
+    }
+  }, [value]);
 
-    useEffect(() => {
-        const options = optionsData?.applicantIndividualCompanyPositions.data || [];
-        setOptions(options);
-    }, [optionsData]);
+  useEffect(() => {
+    const options = optionsData?.applicantIndividualCompanyPositions.data || [];
+    setOptions(options);
+  }, [optionsData]);
 
-    const onChangeHandler = async (
-        event: SyntheticEvent<EventTarget>,
-        newValue: NewValueType
-    ) => {
-        setErrorMessage("");
+  const onChangeHandler = async (
+    event: SyntheticEvent<EventTarget>,
+    newValue: NewValueType
+  ) => {
+    setErrorMessage("");
 
-        if (typeof newValue === "string") {
-            setValue({
-                name: newValue,
-            });
-        } else if (newValue && newValue.inputValue) {
-            const newValueEntity = {
-                id: uuidv4(),
-                name: newValue.inputValue,
-            };
+    if (typeof newValue === "string") {
+      setValue({
+        name: newValue,
+      });
+    } else if (newValue && newValue.inputValue) {
+      const newValueEntity = {
+        id: uuidv4(),
+        name: newValue.inputValue,
+      };
 
-            setInputNewValue(newValueEntity);
+      setInputNewValue(newValueEntity);
 
-            setValue({
-                name: newValue.inputValue,
-            });
+      setValue({
+        name: newValue.inputValue,
+      });
 
-            setOptions((prevState: OptionsType) => {
-                return [...prevState, newValueEntity];
-            });
-        } else {
-            setValue(newValue);
-        }
-    };
+      setOptions((prevState: OptionsType) => {
+        return [...prevState, newValueEntity];
+      });
+    } else {
+      setValue(newValue);
+    }
+  };
 
-    const onSaveHandler = async (event: React.MouseEvent<HTMLElement>) => {
-        event.preventDefault();
+  const onSaveHandler = async (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
 
-        if (inputNewValue && inputNewValue.name) {
-            const positionEntitey = {
-                variables: {name: inputNewValue.name, company_id: 1},
-            };
+    if (inputNewValue && inputNewValue.name) {
+      const positionEntitey = {
+        variables: { name: inputNewValue.name, company_id: 1 },
+      };
 
-            try {
-                await addCompanyPosition(positionEntitey);
-                setInputNewValue(null);
-            } catch (error) {
-                if (error instanceof Error) {
-                    onCancelHandler();
-                    setErrorMessage(error.message);
-                }
-            }
-        }
-    };
-
-    const onCancelHandler = () => {
-        setOptions((prevState) =>
-            prevState.filter((item) => item.id !== inputNewValue?.id)
-        );
-
+      try {
+        await addCompanyPosition(positionEntitey);
         setInputNewValue(null);
-        setValue(null);
-    };
+      } catch (error) {
+        if (error instanceof Error) {
+          onCancelHandler();
+          setErrorMessage(error.message);
+        }
+      }
+    }
+  };
 
-    return (
-        <>
-            <p className={"myP"}>
-                <b>Positions</b>
-            </p>
-            <Autocomplete
-                value={value}
-                onChange={onChangeHandler}
-                filterOptions={filterOptionsHandler}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                id={AUTOCOMPLETE_ID}
-                options={options}
-                getOptionLabel={getOptionlabelHandler}
-                renderOption={renderOptionHandler}
-                sx={AUTOCOMPLETE_SX}
-                freeSolo
-                renderInput={renderInputHandler}
-            />
-            {inputNewValue && value && (
-                <>
-                    <Button
-                        className="myButton"
-                        onClick={onSaveHandler}
-                        variant="contained"
-                        color="success"
-                    >
-                        Save
-                    </Button>
-                    <Button
-                        className="myButton"
-                        onClick={onCancelHandler}
-                        variant="outlined"
-                        color="error"
-                    >
-                        Cancel
-                    </Button>
-                </>
-            )}
-            <h3>{errorMessage}</h3>
-        </>
+  const onCancelHandler = () => {
+    setOptions((prevState) =>
+      prevState.filter((item) => item.id !== inputNewValue?.id)
     );
+
+    setInputNewValue(null);
+    setValue(null);
+  };
+
+  return (
+    <>
+      <p className={"myP"}>
+        <b>Positions</b>
+      </p>
+      <Autocomplete
+        value={value}
+        onChange={onChangeHandler}
+        filterOptions={filterOptionsHandler}
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        id={AUTOCOMPLETE_ID}
+        options={options}
+        getOptionLabel={getOptionlabelHandler}
+        renderOption={renderOptionHandler}
+        sx={AUTOCOMPLETE_SX}
+        freeSolo
+        renderInput={renderInputHandler}
+      />
+      {inputNewValue && value && (
+        <>
+          <Button
+            className="myButton"
+            onClick={onSaveHandler}
+            variant="contained"
+            color="success"
+          >
+            Save
+          </Button>
+          <Button
+            className="myButton"
+            onClick={onCancelHandler}
+            variant="outlined"
+            color="error"
+          >
+            Cancel
+          </Button>
+        </>
+      )}
+      <h3>{errorMessage}</h3>
+    </>
+  );
 }
