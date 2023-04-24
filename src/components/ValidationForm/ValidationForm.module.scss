@@ -1,14 +1,14 @@
 
-.p {
+.paragraph {
   color: #bf1650;
 }
 
-.p::before {
+.paragraph::before {
   display: inline;
   content: "⚠ ";
 }
 
-.input {
+.formInput {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -19,18 +19,7 @@
   font-size: 14px;
 }
 
-.label {
-  line-height: 2;
-  text-align: left;
-  display: block;
-  margin-bottom: 13px;
-  margin-top: 20px;
-  color: white;
-  font-size: 14px;
-  font-weight: 200;
-}
-
-.button[type="submit"],
+.submithbutton[type="submit"],
 .input[type="submit"] {
   background: #ec5990;
   color: white;
@@ -43,12 +32,12 @@
   letter-spacing: 10px;
 }
 
-.button[type="submit"]:hover,
+.submithbutton[type="submit"]:hover,
 .input[type="submit"]:hover {
   background: #bf1650;
 }
 
-.button[type="submit"]:active,
+.submithbutton[type="submit"]:active,
 .input[type="button"]:active,
 .input[type="submit"]:active {
   transition: 0.3s all;
@@ -65,14 +54,14 @@
   transition: 0.3s all;
 }
 
-.button[type="submit"],
+.submithbutton[type="submit"],
 .input[type="button"],
 .input[type="submit"] {
   -webkit-appearance: none;
 }
 
 
-.button[type="button"] {
+.submithbutton[type="button"] {
   display: block;
   appearance: none;
   background: #333;
@@ -84,7 +73,7 @@
 }
 
 
-.button {
+.submithbutton {
   display: block;
   appearance: none;
   margin-top: 40px;

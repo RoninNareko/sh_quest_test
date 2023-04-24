@@ -90,7 +90,7 @@ export default function ValidationForm() {
           errors={errors}
           name={TEXTINPUT_NAME}
           render={({ message }) => (
-            <p className={classNames(styles.p)}>{message}</p>
+            <p className={classNames(styles.paragraph)}>{message}</p>
           )}
         />
 
@@ -114,7 +114,7 @@ export default function ValidationForm() {
           errors={errors}
           name={TEXTAREA_NAME}
           render={({ message }) => (
-            <p className={classNames(styles.p)}>{message}</p>
+            <p className={classNames(styles.paragraph)}>{message}</p>
           )}
         />
 
@@ -158,7 +158,7 @@ export default function ValidationForm() {
           errors={errors}
           name={SELECT_POSITIONS_NAME}
           render={({ message }) => (
-            <p className={classNames(styles.p)}>{message}</p>
+            <p className={classNames(styles.paragraph)}>{message}</p>
           )}
         />
 
@@ -202,11 +202,14 @@ export default function ValidationForm() {
           errors={errors}
           name={SELECT_RELATIONS_NAME}
           render={({ message }) => (
-            <p className={classNames(styles.p)}>{message}</p>
+            <p className={classNames(styles.paragraph)}>{message}</p>
           )}
         />
 
-        <button type={FORM_BUTTON_TYPE} className={classNames(styles.button)}>
+        <button
+          type={FORM_BUTTON_TYPE}
+          className={classNames(styles.submithbutton)}
+        >
           Отправить
         </button>
       </form>
